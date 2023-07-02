@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+<div id="layoutSidenav_content">
+        <div class="container-fluid">
+            <h1 class="mt-4">Directions</h1>
+            {% if completato %}
+            <div class="alert alert-success" role="alert">
+                    Query completata con successo per i valori: Top Utenti = {{ utenti }} , Numero Post = {{ post }} !
+                    Per vedere il risultato controlla tra le schede aperte del tuo browser web...
+            </div>
+            {% endif %}
+            <div class="card mb-4">
+                <div class="card-body">
+                    La seguente query permette di andare a ricercare il numero di utenti specificati che risultano essere più "popolari",
+                    ossia tali per cui hanno il maggior numero di visualizzazioni sui loro contenuti;
+                    di tali utenti si vanno a reperire in ordine cronologico i post da loro condivisi (dal meno recente al più recente)
+                    e si va a localizzare su mappa il numero scelto di tali post, impiegando le informazioni su dove è stato prodotto il contenuto multimediale.
+                </div>
+            </div>
+            <form class="form-inline" action="/directions/" method="POST">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label for="utenti">Numero di utenti più popolari da considerare: </label>
+                    <input id="utenti" name="utenti" class="form-control ml-2" type="number" placeholder="top utenti" value=""/>
+                </div>
+                <div class="form-group ml-5">
+                    <label for="npost">Numero di post da visualizzare: </label>
+                    <input id="npost" name="npost" class="form-control ml-2" type="number" placeholder="post" value=""/>
+                </div>
+                <button class="btn btn-primary ml-5" type="submit">Esegui <i class="fas fa-wrench"></i></button>
+            </form>
+            <small id="utentiHelp" class="form-text text-muted ml-5">numero totale di utenti unici: {{ users }}</small>
+        </div>
+    </main>
+</div>
+{% endblock %}

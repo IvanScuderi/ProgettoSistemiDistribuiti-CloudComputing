@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+<div id="layoutSidenav_content">
+    <div class="container-fluid">
+        <h1 class="mt-4">Tag</h1>
+        {% if completato %}
+        <div class="alert alert-success" role="alert">
+            Query completata con successo! (Numero di tag visualizzati: {{ N }}, Ordinamento: {{ O }}, Esclusione applicata: {{ E }} )
+        </div>
+        {% endif %}
+        <div class="card mb-4">
+            <div class="card-body">
+                La seguente query conteggia il numero di volte che viene utilizzato ogni singolo
+                tag nei diversi post, e calcola le visualizzazioni medie per ogni tag rispetto ai post
+                in cui questo è presente. Si ordina poi il risultato ottenuto in base alla scelta dell'utente
+                e si visualizzano i top N tag (con N parametro in input) mediante due grafici a barre
+                che sintetizzano le informazioni ricavate. Per una questione di applicabilità dei
+                risultati è possibile escludere dalla visualizzazione tag con poche occorrenze secondo un valore
+                stabilito dall'utente, consigliato se si effettua l'ordinamento per 'Visualizzazioni Medie'.
+            </div>
+        </div>
+        <form class="form-inline" action="/tag/" method="POST">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="tag">Top N tag da visualizzare: </label>
+                <input id="tag" name="tag" class="form-control ml-2" type="number" placeholder="N" value=""/>
+            </div>
+            <div class="form-row ml-5">
+                <div class="col-auto">
+                    <label for="ordinamento">Ordinamento:</label>
+                    <select class="custom-select mr-sm-2" id="ordinamento" name="ordinamento">
+                        <option selected>Numero di Occorrenze</option>
+                        <option value="views">Visualizzazioni Medie</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-row ml-5">
+                <div class="col-auto">
+                    <label for="ordinamento">Esludi tag con occorrenze:</label>
+                    <select class="custom-select mr-sm-2" id="escludi" name="escludi">
+                        <option selected>nessuna esclusione</option>
+                        <option value="m1">minori di 1</option>
+                        <option value="m2">minori di 2</option>
+                        <option value="m3">minori di 3</option>
+                    </select>
+                </div>
+            </div>
+            <button class="btn btn-primary ml-5" type="submit">Esegui <i class="fas fa-wrench"></i></button>
+        </form>
+        <div class="container-fluid">
+            {% if mostra_tag %}
+            <div class="row">
+                <div class="col-sm-6">
+                    <img src="{% static 'img/occurrence.jpg' %}" />
+                </div>
+                <div class="col-sm-6 col-offset-10">
+                    <img src="{% static 'img/mean_views.jpg' %}" />
+                </div>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}

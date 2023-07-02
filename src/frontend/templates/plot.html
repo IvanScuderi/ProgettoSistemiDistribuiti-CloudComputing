@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+<div id="layoutSidenav_content">
+        <div class="container-fluid">
+            <h1 class="mt-4">Plot</h1>
+            {% if completato %}
+            <div class="alert alert-success" role="alert">
+                    Query completata con successo per il valore: Post da Visualizzare = {{ p }} ! Per vedere il risultato controlla tra le schede aperte del tuo browser web...
+            </div>
+            {% endif %}
+            <div class="card mb-4">
+                <div class="card-body">
+                    La query permette di andare a visualizzare la posizione in termine di latitudine e longitudine di dove
+                    sono stati prodotti i contenuti multimediali relativi ai vari post;
+                    la visualizzazione avviene su mappa andando ad aprire una finestra di Google Maps.
+                </div>
+            </div>
+            <form class="form-inline" action="/plot/" method="POST">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label for="numeroElementi">Numero di post da visualizzare: </label>
+                    <input id="numeroElementi" name="elem" class="form-control ml-2" type="number" placeholder="numero post" value=""/>
+                </div>
+                <button class="btn btn-primary" type="submit">Esegui <i class="fas fa-wrench"></i></button>
+                <small id="numeroElementiHelp" class="form-text text-muted ml-5">numero di post totali: {{ nElem }}</small>
+            </form>
+        </div>
+    </main>
+</div>
+{% endblock %}

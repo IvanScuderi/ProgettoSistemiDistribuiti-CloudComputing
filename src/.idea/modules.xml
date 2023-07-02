@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/../PycharmProjects/.idea/PycharmProjects.iml" filepath="$PROJECT_DIR$/../PycharmProjects/.idea/PycharmProjects.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/livy-spark-cluster.iml" filepath="$PROJECT_DIR$/.idea/livy-spark-cluster.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../PycharmProjects/prova_buid/.idea/prova_buid.iml" filepath="$PROJECT_DIR$/../PycharmProjects/prova_buid/.idea/prova_buid.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../PycharmProjects/prova_build/.idea/prova_build.iml" filepath="$PROJECT_DIR$/../PycharmProjects/prova_build/.idea/prova_build.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../provabuild/.idea/provabuild.iml" filepath="$PROJECT_DIR$/../provabuild/.idea/provabuild.iml" />
+    </modules>
+  </component>
+</project>

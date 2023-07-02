@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+<div id="layoutSidenav_content">
+    <div class="container-fluid">
+        <h1 class="mt-4">KMeans Heatmap</h1>
+        {% if completato %}
+        <div class="alert alert-success" role="alert">
+            Query completata con successo per il valore: K = {{ k }} , Post Impiegati = {{ p }} ! Per vedere il risultato controlla tra le schede aperte del tuo browser web...
+        </div>
+        {% endif %}
+        <div class="card mb-4">
+            <div class="card-body">
+                La seguente query applica sui dati l'algoritmo di clustering KMeans con il valore di k selezionato restituendo i centroidi calcolati,
+                che verranno anche plottati su mappa, e il coefficiente di silhouette per tale clusterizzazione.
+                L'utente può inoltre specificare il numero dei top post per visualizzazioni appartenenti ad ogni cluster,
+                da impiegare per la costruzione di una 'heatmap': ossia in base ai cluster risultanti si va ad assegnare una
+                colorazione più o meno accesa ad una zona di mappa rispetto alla densità di locazione dei post con maggior numero di visualizzazioni.
+                Infine la metà dei top post di ogni cluster viene visualizzata su mappa come marker.
+            </div>
+        </div>
+        <form class="form-inline" action="/kmeans/" method="POST">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="k">Inserisci un valore per K: </label>
+                <input id="k" name="k" class="form-control ml-2" type="number" placeholder="K" value=""/>
+            </div>
+            <div class="form-group ml-5">
+                <label for="hm">Top post da impiegare per l'heatmap: </label>
+                <input id="hm" name="hm" class="form-control ml-2" type="number" placeholder="numero post" value=""/>
+            </div>
+            <button class="btn btn-primary ml-5" type="submit">Esegui <i class="fas fa-wrench"></i></button>
+        </form>
+        {% if cluster %}
+        <small id="utentiHelp" class="form-text text-muted ml-5">coefficiente di silhouette per la clusterizzazione risultante: {{ sc }}    ( K = {{ k }} )</small>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

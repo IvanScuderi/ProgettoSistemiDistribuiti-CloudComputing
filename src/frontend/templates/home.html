@@ -1,0 +1,95 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+<div id="layoutSidenav_content">
+    <main>
+        <div class="container-fluid">
+            <h1 class="mt-4">Home</h1>
+                <div class="card mb-4">
+                    <div class="card-body">
+                        Il seguente progetto è costituito da una piattaforma web che permette l'accesso ed il conseguente
+                        utilizzo di un cluster Spark implementato tramite il tool di gestione container chiamato Docker.
+                        In particolare il cluster è costituito da: un nodo master (<a href="http://localhost:8080/">spark-master</a>), tre nodi
+                        worker (<a href="http://localhost:8081/">spark-worker-1</a>, <a href="http://localhost:8082/">spark-worker-2</a>,
+                        <a href="http://localhost:8083/">spark-worker-3</a>), un nodo su cui è stato implementato il server livy (<a href="http://localhost:8998/">livy-server</a>).
+                        Ogni nodo costituisce un container a se stante, inoltre si è scelto l'utilizzo di Apache Livy ossia
+                        un framework che implementa un'interfaccia REST per l'accesso al cluster.
+                    </div>
+                    {% if not caricato %}
+                    <div class="card-footer text-muted">
+                        Prima di poter effettuare query sul dataset è necessario iniziare una sessione livy sul cluster...
+                    </div>
+                    {% endif %}
+                </div>
+            {% if not caricato %}
+                <form class="form-inline" action="/progettosistdist/" method="POST">
+                    {% csrf_token %}
+                    <button class="btn btn-primary btn-lg" type="submit"><i class="fas fa-bolt"></i> Inizia Sessione Livy</button>
+                </form>
+            {% endif %}
+            {% if caricato %}
+                <div class="alert alert-success" role="alert">
+                    Sessione inizializzata con successo! Informazioni sul dataset: numero di righe = {{ righe }}; numero di colonne = {{ colonne }}
+                </div>
+                <a class="btn btn-danger btn-block mb-4" type="button" href="/clear">Termina Sessione</a>
+                <div class="card mb-4">
+                    <div class="card-header">
+                        <i class="fas fa-table mr-1"></i>
+                        Esempio Dataset
+                    </div>
+                </div>
+                <div class="table">
+                    <table class="thead-dark" id="dataTable" width="100%" cellspacing="0">
+                        <thead>
+                            <tr>
+                                <th>datePosted</th>
+                                <th>dateTaken</th>
+                                <th>description</th>
+                                <th>familyFlag</th>
+                                <th>friendFlag</th>
+                                <th>hasPeople</th>
+                                <th>lastUpdate</th>
+                                <th>media</th>
+                                <th>owner</th>
+                                <th>placeId</th>
+                                <th>publicFlag</th>
+                                <th>tags</th>
+                                <th>title</th>
+                                <th>url</th>
+                                <th>views</th>
+                                <th>latitude</th>
+                                <th>longitude</th>
+                                <th>accuracy</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for index, row in iter %}
+                            <tr>
+                                <td>{{ row.datePosted }}</td>
+                                <td>{{ row.dateTaken }}</td>
+                                <td>{{ row.description }}</td>
+                                <td>{{ row.familyFlag }}</td>
+                                <td>{{ row.friendFlag }}</td>
+                                <td>{{ row.hasPeople }}</td>
+                                <td>{{ row.lastUpdate }}</td>
+                                <td>{{ row.media }}</td>
+                                <td>{{ row.owner }}</td>
+                                <td>{{ row.placeId }}</td>
+                                <td>{{ row.publicFlag }}</td>
+                                <td>{{ row.tags }}</td>
+                                <td>{{ row.title }}</td>
+                                <td>{{ row.url }}</td>
+                                <td>{{ row.views }}</td>
+                                <td>{{ row.latitude }}</td>
+                                <td>{{ row.longitude }}</td>
+                                <td>{{ row.accuracy }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+        </div>
+        {% endif %}
+    </main>
+</div>
+{% endblock %}
